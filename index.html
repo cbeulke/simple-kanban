@@ -7,21 +7,23 @@
 		<div class="ui segment" ng-controller="TaskController">
 			<div class="ui container">
 				<h1 class="title">Aufgaben</h1>
-				<ul class="ui bulleted list">
-					<li ng-repeat="task in tasks" class="item">
-						({{task.id}}) {{task.title}}
-						<button class="ui red button" ng-click="delete(task)">Löschen</button>
-					</li>
-				</ul>
+				<table class="ui table">
+					<tr ng-repeat="task in tasks">
+						<td>
+							({{task.id}}) {{task.title}}
+						</td>
+						<td>
+							<button class="ui red button" ng-click="delete(task)">Löschen</button>
+						</td>
+					</tr>
+				</table>
+
 				<div class="ui input">
 					<input type="text" placeholder="YOLO" ng-model="task"/>
 				</div>
 				<button class="ui button" ng-click="submit()">Speichern</button>
 			</div>
 		</div>
-
-
-
 
 		<!-- JS -->
 		<script src="antonaustirol/jquery/dist/jquery.min.js"></script>

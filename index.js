@@ -74,7 +74,7 @@ server.register([ require('inert') ], (err) => {
 				res('success');
 			});
 		}
-	})
+	});
 });
 
 
