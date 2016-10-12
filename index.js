@@ -16,7 +16,16 @@ var route = {
 server.register([ require('inert') ], (err) => {
 	if(err) throw err;
 
-	server.route(route);	
+	server.route(route);
+	server.route({
+		path: '/antonaustirol/{param*}',
+		method: 'GET',
+		handler: {
+			directory: {
+				path: 'node_modules'
+			}
+		}
+	});	
 });
 
 
