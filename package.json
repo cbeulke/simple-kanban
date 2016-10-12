@@ -1,7 +1,7 @@
 {
   "name": "simple-kanban",
   "version": "1.0.0",
-  "description": "",
+  "description": "#YOLO",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/cbeulke/simple-kanban#readme",
   "dependencies": {
+    "angular": "^1.5.8",
     "hapi": "^15.1.1",
     "inert": "^4.0.2",
     "jquery": "^3.1.1",

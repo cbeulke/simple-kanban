@@ -26,6 +26,23 @@ server.register([ require('inert') ], (err) => {
 			}
 		}
 	});	
+	server.route({
+		path: '/app/{param*}',
+		method: 'GET',
+		handler: {
+			directory: {
+				path: 'app'
+			}
+		}
+	});
+	server.route({
+		path: '/tasks',
+		method: 'POST',
+		handler: (req, res) => {
+			console.log(req.payload);
+			res('SUCCESS!');
+		}
+	});
 });
 
 

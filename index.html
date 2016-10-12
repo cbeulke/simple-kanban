@@ -1,10 +1,10 @@
-<html>
+<html ng-app="simple-kanban">
 	<head>
 		<link href="antonaustirol/semantic-ui-css/semantic.min.css" rel="stylesheet" />
 	</head>
 
 	<body>
-		<div class="ui segment">
+		<div class="ui segment" ng-controller="TaskController">
 			<div class="ui container">
 				<h1 class="title">Aufgaben</h1>
 				<ul class="ui bulleted list">
@@ -13,9 +13,9 @@
 					<li class="item">Task 3</li>
 				</ul>
 				<div class="ui input">
-					<input type="text" placeholder="YOLO" />
+					<input type="text" placeholder="YOLO" ng-model="task"/>
 				</div>
-				<button class="ui button">Speichern</button>
+				<button class="ui button" ng-click="submit()">Speichern</button>
 			</div>
 		</div>
 
@@ -25,5 +25,7 @@
 		<!-- JS -->
 		<script src="antonaustirol/jquery/dist/jquery.min.js"></script>
 		<script src="antonaustirol/semantic-ui-css/semantic.min.js"></script>
+		<script src="antonaustirol/angular/angular.min.js"></script>
+		<script src="app/app.js"></script>
 	</body>
 </html>
