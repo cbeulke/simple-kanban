@@ -1,0 +1,19 @@
+{
+  "name": "simple-kanban",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbeulke/simple-kanban.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cbeulke/simple-kanban/issues"
+  },
+  "homepage": "https://github.com/cbeulke/simple-kanban#readme"
+}
