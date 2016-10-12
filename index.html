@@ -8,9 +8,10 @@
 			<div class="ui container">
 				<h1 class="title">Aufgaben</h1>
 				<ul class="ui bulleted list">
-					<li class="item">Task 1</li>
-					<li class="item">Task 2</li>
-					<li class="item">Task 3</li>
+					<li ng-repeat="task in tasks" class="item">
+						({{task.id}}) {{task.title}}
+						<button class="ui red button" ng-click="delete(task)">Löschen</button>
+					</li>
 				</ul>
 				<div class="ui input">
 					<input type="text" placeholder="YOLO" ng-model="task"/>
