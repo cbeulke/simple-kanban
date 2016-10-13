@@ -4,7 +4,8 @@
   "description": "#YOLO",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node start.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,10 @@
     "jquery": "^3.1.1",
     "mysql": "^2.11.1",
     "semantic-ui-css": "^2.2.4"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-hapi": "^0.12.0"
   }
 }

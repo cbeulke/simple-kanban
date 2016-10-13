@@ -3,9 +3,9 @@ const mysql = require('mysql');
 
 const connection = mysql.createConnection({
 	host: 'localhost',
-	database: 'simple-kanban',
-	user: process.env.DB_USER || 'root',
-	password: process.env.DB_PASS || 'secret123'
+	user: process.env.DB_USER 		|| 'nodeuser',
+	password: process.env.DB_PASS 	|| 'nodepass',
+	database: process.env.DB_NAME 	|| 'node'
 });
 
 const server = new Hapi.Server();
@@ -77,8 +77,4 @@ server.register([ require('inert') ], (err) => {
 	});
 });
 
-
-server.start((err) => {
-	if(err) throw err;
-	console.log('server started...');
-});
+module.exports = server;
