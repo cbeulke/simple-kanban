@@ -13,20 +13,19 @@ server.connection({
 	port: 3000
 });
 
-var route = {
-	path: '/',
-	method: 'GET',
-	handler: (req, res) => {
-		res.file('index.html');
-	}
-};
-
 server.register([ require('inert') ], (err) => {
 	if(err) throw err;
 
-	server.route(route);
 	server.route({
-		path: '/antonaustirol/{param*}',
+		path: '/',
+		method: 'GET',
+		handler: (req, res) => {
+			res.file('index.html');
+		}
+	});
+
+	server.route({
+		path: '/vendors/{param*}',
 		method: 'GET',
 		handler: {
 			directory: {
@@ -43,6 +42,7 @@ server.register([ require('inert') ], (err) => {
 			}
 		}
 	});
+
 	server.route({
 		path: '/tasks',
 		method: 'POST',
@@ -60,7 +60,29 @@ server.register([ require('inert') ], (err) => {
 		handler: (req, res) => {
 			connection.query('SELECT * FROM tasks', (err, tasks) => {
 				if(err) throw err;
-				res(tasks);
+
+				var columns = [
+					{listName: 'ToDo', columnStatus: 0, items: []},
+					{listName: 'In Arbeit', columnStatus: 1, items: []},
+					{listName: 'Erledigt', columnStatus: 2, items: []}
+				];
+
+				for (var i = tasks.length - 1; i >= 0; i--) {
+					columns[tasks[i].status].items.push(tasks[i]);
+				}
+
+				res(columns);
+			});
+		}
+	});
+
+	server.route({
+		path: '/tasks/{id}',
+		method: 'PUT',
+		handler: (req, res) => {
+			connection.query('UPDATE tasks SET status = ? WHERE id = ?', [req.payload.status, req.params.id], (err) => {
+				if(err) throw err;
+				res('success');
 			});
 		}
 	});

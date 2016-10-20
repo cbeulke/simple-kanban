@@ -1,0 +1,12 @@
+.list {
+	min-height: 100px;
+}
+
+.item {
+	min-height: 50px;
+	cursor: pointer;
+}
+
+#bottom-button {
+	 margin-top: 15px;
+}

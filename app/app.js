@@ -1,9 +1,9 @@
-const app = angular.module('simple-kanban', []);
+const app = angular.module('simple-kanban', [ 'dndLists' ]);
 
 app.controller('TaskController', ($scope, $http) => {
     $scope.task = '';
 
-    $scope.tasks = [];
+    $scope.columns = {};
     
     $scope.delete = (task) => {
         $http.delete('/tasks/' + task.id, task).then(() => {
@@ -12,22 +12,25 @@ app.controller('TaskController', ($scope, $http) => {
     };
 
     $scope.submit = () => {
-        var dataToSend = {
-            title: $scope.task
+        var newTask = {
+            title: $scope.task,
+            status: 0
         };
 
-        var functionToCallAfterPost = () => {
+        $http.post('/tasks', newTask).then(() => {
             loadTasks();
             $scope.task = '';
-        };
-
-        var promise = $http.post('/tasks', dataToSend);
-        promise.then(functionToCallAfterPost);
+        });
     };
+
+    $scope.drop = (list, item) => {
+        item.status = list.columnStatus;
+        $http.put('/tasks/' + item.id, item).then(loadTasks);
+    }
 
     var loadTasks = () => {
         $http.get('/tasks').then((data) => {
-            $scope.tasks = data.data;
+            $scope.columns = data.data;
         });
     };
 

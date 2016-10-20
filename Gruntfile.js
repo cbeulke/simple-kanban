@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			hapi: {
-				files: [ './**/*.js' ],
+				files: [ '**/*.js', '!app/*.js' ],
 				tasks: [ 'hapi' ],
 				options: {
 					spawn: false

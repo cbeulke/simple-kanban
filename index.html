@@ -1,24 +1,42 @@
 <html ng-app="simple-kanban">
 	<head>
-		<link href="antonaustirol/semantic-ui-css/semantic.min.css" rel="stylesheet" />
+		<link href="vendors/semantic-ui-css/semantic.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="app/style.css">
 	</head>
 
 	<body>
 		<div class="ui segment" ng-controller="TaskController">
 			<div class="ui container">
 				<h1 class="title">Aufgaben</h1>
-				<table class="ui table">
-					<tr ng-repeat="task in tasks">
-						<td>
-							({{task.id}}) {{task.title}}
-						</td>
-						<td>
-							<button class="ui red button" ng-click="delete(task)">Löschen</button>
-						</td>
-					</tr>
-				</table>
 
-				<div class="ui input">
+				<div class="ui grid">
+					
+					<div class="five wide column" ng-repeat="list in columns">
+
+						<div class="ui stacked segment">
+
+							<h2>{{list.listName}}</h2>
+
+							<div class="ui middle aligned divided list" dnd-list dnd-drop="drop(list, item)">
+								<div
+									class="item"
+									ng-repeat="item in list.items"
+							        dnd-draggable="item">
+							        <div class="right floated content">
+							        	<div class="ui red button" ng-click="delete(item)">Löschen</div>
+							        </div>
+							        <img class="ui avatar image" src="app/images/push-pin.png">
+									<div class="content">{{item.title}}</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="ui input" id="bottom-button">
 					<input type="text" placeholder="YOLO" ng-model="task"/>
 				</div>
 				<button class="ui button" ng-click="submit()">Speichern</button>
@@ -26,9 +44,10 @@
 		</div>
 
 		<!-- JS -->
-		<script src="antonaustirol/jquery/dist/jquery.min.js"></script>
-		<script src="antonaustirol/semantic-ui-css/semantic.min.js"></script>
-		<script src="antonaustirol/angular/angular.min.js"></script>
+		<script src="vendors/jquery/dist/jquery.min.js"></script>
+		<script src="vendors/semantic-ui-css/semantic.min.js"></script>
+		<script src="vendors/angular/angular.min.js"></script>
+		<script src="vendors/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>
 </html>

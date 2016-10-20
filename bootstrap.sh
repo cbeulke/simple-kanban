@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 
-# Prepare for mysql installation
+apt-get update
+
+# Install Node.js and other JS tools
+apt-get install -y curl
+
+curl -sL https://deb.nodesource.com/setup_6.x | bash -
+apt-get install -y nodejs
+
+npm install -g grunt-cli
+
+# Install mysql / Prepare for headless mysql installation
 debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password rootpass'
 debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password rootpass'
 
-apt-get update
-
-# Install mysql
 apt-get install -y mysql-server-5.5
 
 if [ ! -f /var/log/databasesetup ]; then
@@ -22,10 +29,3 @@ if [ ! -f /var/log/databasesetup ]; then
 	fi
 fi
 
-# Install Node.js and other JS tools
-apt-get install -y curl
-
-curl -sL https://deb.nodesource.com/setup_6.x | bash -
-apt-get install -y nodejs
-
-npm install -g grunt-cli
