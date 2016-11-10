@@ -1,5 +1,7 @@
 const server = require('./index');
+const log = require('noogger');
+
 server.start((err) => {
 	if(err) throw err;
-	console.log('Server running...');
+	log.info('Server running...');
 });

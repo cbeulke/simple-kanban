@@ -1,17 +1,17 @@
 {
   "name": "simple-kanban",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "#YOLO",
-  "main": "index.js",
+  "main": "start.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node start.js"
+    "start": "node start.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cbeulke/simple-kanban.git"
   },
-  "author": "",
+  "author": "Christian Beulke <mail@beulke.net>, Benjamin Wimmel <info@wimdo.net>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cbeulke/simple-kanban/issues"
@@ -24,11 +24,14 @@
     "inert": "^4.0.2",
     "jquery": "^3.1.1",
     "mysql": "^2.11.1",
+    "noogger": "^0.1.4",
     "semantic-ui-css": "^2.2.4"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-hapi": "^0.12.0"
+    "grunt-hapi": "^0.12.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
   }
 }
