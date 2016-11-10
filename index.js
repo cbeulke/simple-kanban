@@ -2,7 +2,7 @@ const Hapi = require('hapi');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-	host: 'localhost',
+	host: process.env.DB_HOST		|| 'localhost',
 	user: process.env.DB_USER 		|| 'nodeuser',
 	password: process.env.DB_PASS 	|| 'nodepass',
 	database: process.env.DB_NAME 	|| 'node'
@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 
 const server = new Hapi.Server();
 server.connection({
-	port: 3000
+	port: process.env.PORT || 3000
 });
 
 server.register([ require('inert') ], (err) => {

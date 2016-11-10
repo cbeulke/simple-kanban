@@ -1,6 +1,19 @@
-const app = angular.module('simple-kanban', [ 'dndLists' ]);
+const app = angular.module('simple-kanban', [ angularDragula(angular) ]);
 
 app.controller('TaskController', ($scope, $http) => {
+    
+    $scope.$on('common.drop-model', function(el, item, column) {
+        
+        $scope.columns.forEach(function(c) {
+           c.items.forEach(function(itemToUpdate) {
+                if(itemToUpdate.id === item.data('id')) {
+                    itemToUpdate.status = column.data('status');
+                    $http.put('/tasks/' + itemToUpdate.id, itemToUpdate).then(loadTasks);                
+                }
+           });
+        });
+    });
+    
     $scope.task = '';
 
     $scope.columns = {};
@@ -22,11 +35,6 @@ app.controller('TaskController', ($scope, $http) => {
             $scope.task = '';
         });
     };
-
-    $scope.drop = (list, item) => {
-        item.status = list.columnStatus;
-        $http.put('/tasks/' + item.id, item).then(loadTasks);
-    }
 
     var loadTasks = () => {
         $http.get('/tasks').then((data) => {
