@@ -2,16 +2,15 @@ const app = angular.module('simple-kanban', [ angularDragula(angular) ]);
 
 app.controller('TaskController', ($scope, $http) => {
     
-    $scope.$on('common.drop-model', function(el, item, column) {
-        
-        $scope.columns.forEach(function(c) {
-           c.items.forEach(function(itemToUpdate) {
-                if(itemToUpdate.id === item.data('id')) {
-                    itemToUpdate.status = column.data('status');
-                    $http.put('/tasks/' + itemToUpdate.id, itemToUpdate).then(loadTasks);                
-                }
-           });
+    $scope.$on('common.drop-model', function(domElement, item, column) {
+        var itemToUpdate = $scope.columns.reduce(function(a, b) {
+            return [...a, ...b.items];
+        }, []).find(function(a) {
+            return a.id === item.data('id');
         });
+        
+        itemToUpdate.status = column.data('status');
+        $http.put('/tasks/' + itemToUpdate.id, itemToUpdate);
     });
     
     $scope.task = '';
