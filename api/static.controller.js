@@ -8,6 +8,11 @@ module.exports = function() {
 				path: 'node_modules'
 			}
 		},
+		serveViews: {
+			directory: {
+				path: 'views'
+			}
+		},
         serveClientApp: {
 			directory: {
 				path: 'app'

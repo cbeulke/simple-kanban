@@ -10,7 +10,12 @@ exports.register = function(server, options, next) {
 	server.route({
 		path: '/tasks',
 		method: 'GET',
-		handler: controller.selectAsColumns
+		config: {
+			handler: controller.selectAsColumns,
+			auth: {
+				strategy: 'jwt'
+			}
+		}
 	});
 
 	server.route({

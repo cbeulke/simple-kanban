@@ -1,4 +1,5 @@
 module.exports = {
+    secret: 'dafvhbaeurvbafvbaer1654fb6sfgsvgaI',
     database: {
         host: process.env.DB_HOST		|| 'localhost',
     	user: process.env.DB_USER 		|| 'nodeuser',

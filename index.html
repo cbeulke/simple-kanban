@@ -5,52 +5,24 @@
 		<link href="app/style.css" rel="stylesheet">
 	</head>
 
-	<body>
-		<div class="ui segment" ng-controller="TaskController">
-			<div class="ui container">
-				<h1 class="title">Aufgaben</h1>
-
-				<div class="ui grid">
-					
-					<div class="five wide column" ng-repeat="list in columns">
-
-						<div class="ui stacked segment">
-
-							<h2>{{list.listName}}</h2>
-
-							<div class="ui middle aligned divided list"
-								dragula='"common"'
-								dragula-model="list.items"
-								dragula-scope="$parent"
-								data-status="{{list.columnStatus}}">
-								<div class="item"
-									data-id="{{item.id}}"
-									ng-repeat="item in list.items">
-							        <div class="right floated content">
-							        	<div class="ui red button" ng-click="delete(item)">Löschen</div>
-							        </div>
-							        <img class="ui avatar image" src="app/images/push-pin.png">
-									<div class="content">{{item.title}}</div>
-								</div>
-
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-
-				<div class="ui input" id="bottom-button">
-					<input type="text" placeholder="YOLO" ng-model="task"/>
-				</div>
-				<button class="ui button" ng-click="submit()">Speichern</button>
+	<body style="padding-top: 60px;">
+		<nav class="ui bottom fixed menu" ng-controller="NavController">
+			<div class="right menu">
+				<a class="ui icon item" ng-click="logout()">
+					<i class="sign out icon"></i>
+				</a>
 			</div>
+		</nav>
+		
+		<div class="ui container">
+			<div ng-view></div>
 		</div>
 
 		<!-- JS -->
 		<script src="vendors/jquery/dist/jquery.min.js"></script>
 		<script src="vendors/semantic-ui-css/semantic.min.js"></script>
 		<script src="vendors/angular/angular.min.js"></script>
+		<script src="vendors/angular-route/angular-route.min.js"></script>
 		<script src="vendors/angular-dragula/dist/angular-dragula.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>

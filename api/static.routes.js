@@ -12,6 +12,13 @@ exports.register = function(server, options, next) {
 		method: 'GET',
 		handler: controller.serveVendorModules
 	});	
+	
+	server.route({
+	    path: '/views/{param*}' ,
+	    method: 'GET',
+	    handler: controller.serveViews
+	});
+	
 	server.route({
 		path: '/app/{param*}',
 		method: 'GET',

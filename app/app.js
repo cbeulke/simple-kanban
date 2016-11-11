@@ -1,7 +1,77 @@
-const app = angular.module('simple-kanban', [ angularDragula(angular) ]);
+const app = angular.module('simple-kanban', [ 'ngRoute', angularDragula(angular) ]);
 
-app.controller('TaskController', ($scope, $http) => {
+app
+.factory('authInterceptor', function($q, $location, auth) {
+    return {
+        request: (config) => {
+            var token = auth.getToken();
+            if(token) {
+                config.headers.Authorization = 'Bearer ' + token;
+            }
+            return config;
+        },
+        response: (res) => {
+            if(res.data.token) {
+                auth.saveToken(res.data.token);
+            }
+            return res;
+        },
+        responseError: (rejection) => {
+            if(rejection.status === 401) {
+                $location.path('/login');
+            }
+            return $q.reject(rejection);
+        }
+    }
+})
+.service('user', function($http) {
+    var self = this;
     
+    self.register = (username) => {
+        return $http.post('/auth/register', {
+            username: username
+        })
+    };
+    
+    self.login = (username) => {
+        return $http.post('/auth/login', {
+            username: username
+        })
+    };
+})
+.service('auth', function($window) {
+    var self = this;
+    
+    self.parseJWT = (token) => {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse($window.autob(base64));
+    }
+    
+    self.saveToken = (token) => {
+        $window.localStorage['jwtToken'] = token;
+    }
+    
+    self.getToken = () => {
+        return $window.localStorage['jwtToken'];
+    }
+    
+    self.isAuthenticated = () => {
+        var token = self.getToken();
+        if(token) {
+            var params = self.parseJWT(token);
+            return Math.round(new Date().getTime() / 1000) <= params.exp;
+        } else {
+            return false;
+        }
+    }
+    
+    self.logout = () => {
+        $window.localStorage.removeItem('jwtToken');
+    }
+    
+})
+.controller('TaskController', function($scope, $http) {
     $scope.$on('common.drop-model', function(domElement, item, column) {
         var itemToUpdate = $scope.columns.reduce(function(a, b) {
             return [...a, ...b.items];
@@ -42,4 +112,31 @@ app.controller('TaskController', ($scope, $http) => {
     };
 
     loadTasks();
+})
+.controller('LoginController', function($scope, $location, user) {
+    $scope.login = (username) => {
+        user.login(username).then((response) => {
+            $location.path('/');
+        }, (response) => {
+            console.log(response);
+        });
+    };
+})
+.controller('NavController', function($scope, $window, $location) {
+    $scope.logout = () => {
+        $window.localStorage.removeItem('jwtToken');
+        $location.path('/login');
+    }
+})
+.config(function($routeProvider, $locationProvider, $httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+    $routeProvider
+        .when('/', {
+            templateUrl: 'views/workspace.html',
+            controller: 'TaskController'
+        })
+        .when('/login', {
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+        });
 });

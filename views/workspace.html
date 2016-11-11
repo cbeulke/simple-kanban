@@ -1,0 +1,30 @@
+<h3 class="ui header">Aufgaben</h1>
+<div class="ui grid">
+	<div class="five wide column" ng-repeat="list in columns">
+		<div class="ui stacked segment">
+			<h4 class="ui header">{{list.listName}}</h4>
+			<div class="ui middle aligned divided list"
+				dragula='"common"'
+				dragula-model="list.items"
+				dragula-scope="$parent"
+				data-status="{{list.columnStatus}}">
+				
+				<div class="item"
+					data-id="{{item.id}}"
+					ng-repeat="item in list.items">
+			        <div class="right floated content">
+			        	<div class="ui red button" ng-click="delete(item)">Löschen</div>
+			        </div>
+			        <img class="ui avatar image" src="app/images/push-pin.png">
+					<div class="content">{{item.title}}</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="ui input" id="bottom-button">
+	<input type="text" placeholder="YOLO" ng-model="task"/>
+</div>
+<button class="ui button" ng-click="submit()">Speichern</button>
