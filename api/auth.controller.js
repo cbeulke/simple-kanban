@@ -21,14 +21,17 @@ module.exports = function() {
         login: (req, res) => {
             if(req.payload.username && req.payload.password) {
                 connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [ req.payload.username, req.payload.password ], (err, result) => {
-                    if(result.size > 0) {
+                    if(result.length > 0) {
                         return res({
                             token: generateJWT(result[0].id, result[0].username)
-                        });     
+                        });
+                    } else {
+                        return res(Boom.unauthorized('no data found for user / password combination'));
                     }
                 })
+            } else {
+                return res(Boom.unauthorized('invalid user'));
             }
-            return res(Boom.unauthorized('invalid user'));
         },
         register: (req, res) => {
             res(Boom.notImplemented());
