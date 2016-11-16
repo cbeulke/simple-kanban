@@ -27,9 +27,10 @@ app
 .service('user', function($http) {
     var self = this;
     
-    self.register = (username) => {
+    self.register = (username, password) => {
         return $http.post('/auth/register', {
-            username: username
+            username: username,
+            password: password
         })
     };
     
@@ -123,6 +124,15 @@ app
         });
     };
 })
+.controller('RegistrationController', function($scope, $location) {
+    $scope.register = (username, password) => {
+        user.register(username, password).then((response) => {
+            $location.path('/login');
+        }, (response) => {
+            console.log(response);
+        });
+    }
+})
 .controller('NavController', function($scope, $window, $location) {
     $scope.logout = () => {
         $window.localStorage.removeItem('jwtToken');
@@ -139,5 +149,9 @@ app
         .when('/login', {
             templateUrl: 'views/login.html',
             controller: 'LoginController'
+        })
+        .when('/register', {
+            templateUrl: 'views/register.html',
+            controller: 'RegistrationController'
         });
 });

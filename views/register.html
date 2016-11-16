@@ -1,15 +1,14 @@
-<h3 class="ui top attached header">Login</h1>
+<h3 class="ui top attached header">Registrierung</h1>
 <div class="ui attached segment">
-    <form class="ui form">
+    <div class="ui form">
         <div class="field">
-        </div>
             <label>Benutzername</label>
             <input type="text" name="login" ng-model="username" />    
+        </div>
         <div class="field">
         	<label>Passwort</label>
         	<input type="password" name="password" ng-model="password" />
         </div>
-        <button type="submit" class="ui button" ng-click="login(username, password)">Login</button>
-    </form>
-    <a href="#/register">Registrierung</a>
+        <button class="ui button" ng-click="register(username, password)">Absenden</button>    
+    </div>
 </div>

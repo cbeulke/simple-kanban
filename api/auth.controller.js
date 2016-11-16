@@ -34,7 +34,14 @@ module.exports = function() {
             }
         },
         register: (req, res) => {
-            res(Boom.notImplemented());
+            if(req.payload.username && req.payload.password) {
+                connection.query('INSERT INTO users SET ?', req.payload, (err, result) => {
+                    return res(result);
+                });
+            } else {
+                return res(Boom.badData('please provide username and password'));
+            }
+            
         }
     }
 }();
