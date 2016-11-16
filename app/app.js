@@ -33,9 +33,10 @@ app
         })
     };
     
-    self.login = (username) => {
+    self.login = (username, password) => {
         return $http.post('/auth/login', {
-            username: username
+            username: username,
+            password: password
         })
     };
 })
@@ -114,8 +115,8 @@ app
     loadTasks();
 })
 .controller('LoginController', function($scope, $location, user) {
-    $scope.login = (username) => {
-        user.login(username).then((response) => {
+    $scope.login = (username, password) => {
+        user.login(username, password).then((response) => {
             $location.path('/');
         }, (response) => {
             console.log(response);

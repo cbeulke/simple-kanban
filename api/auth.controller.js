@@ -21,10 +21,12 @@ module.exports = function() {
         login: (req, res) => {
             if(req.payload.username && req.payload.password) {
                 connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [ req.payload.username, req.payload.password ], (err, result) => {
-                    return res({
-                        token: generateJWT(1, 'user')
-                    });        
-                 })
+                    if(result.size > 0) {
+                        return res({
+                            token: generateJWT(result[0].id, result[0].username)
+                        });     
+                    }
+                })
             }
             return res(Boom.unauthorized('invalid user'));
         },

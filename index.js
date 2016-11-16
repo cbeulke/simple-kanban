@@ -24,7 +24,7 @@ server.register([
 		server.register([
 			require('./api/static.routes'),
 			require('./api/tasks.routes'),
-			require('./api/auth.routes')	
+			require('./api/auth.routes')
 		]);
 });
 
