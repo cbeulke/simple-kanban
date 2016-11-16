@@ -124,7 +124,7 @@ app
         });
     };
 })
-.controller('RegistrationController', function($scope, $location) {
+.controller('RegistrationController', function($scope, $location, user) {
     $scope.register = (username, password) => {
         user.register(username, password).then((response) => {
             $location.path('/login');

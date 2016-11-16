@@ -1,12 +1,18 @@
+const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
 const config = require('../config');
 const log = require('noogger');
 
 module.exports = function() {
     var connection = mysql.createConnection(config.database);
+    
+    var getJwtPayload = (req) => {
+    	return jwt.verify(req.headers.authorization.split(' ')[1], config.secret);	
+    };
 
     return {
         saveNewTask: (req, res) => {
+        	req.payload.userId = getJwtPayload(req)._id;
 			connection.query('INSERT INTO tasks SET ?', req.payload, (err, result) => {
 				if(err) {
 					log.error(err);
@@ -16,7 +22,7 @@ module.exports = function() {
 			});
 		},
 		selectAsColumns: (req, res) => {
-			connection.query('SELECT * FROM tasks', (err, tasks) => {
+			connection.query('SELECT * FROM tasks WHERE userId = ?', [ getJwtPayload(req)._id ], (err, tasks) => {
 				if(err) {
 					log.error(err);
 					throw err;
