@@ -21,6 +21,7 @@ module.exports = function() {
         login: (req, res) => {
             if(req.payload.username && req.payload.password) {
                 connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [ req.payload.username, req.payload.password ], (err, result) => {
+                    if(err) throw err;
                     if(result.length > 0) {
                         return res({
                             token: generateJWT(result[0].id, result[0].username)
