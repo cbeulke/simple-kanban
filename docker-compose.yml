@@ -6,13 +6,20 @@ services:
       - "3000:3000"
     links:
       - database
+    environment:
+      DB_HOST: database
+      DB_USER: kanban
+      DB_PASS: kanban
+      DB_NAME: kanban
+    depends_on:
+      - database
   database:
     image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=kanban
-      - MYSQL_USER=kanban
-      - MYSQL_PASSWORD=kanban
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kanban
+      MYSQL_USER: kanban
+      MYSQL_PASSWORD: kanban
     volumes:
       - data:/var/lib/mysql
       - ./data:/docker-entrypoint-initdb.d
