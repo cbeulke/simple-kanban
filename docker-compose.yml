@@ -1,0 +1,20 @@
+version: "2"
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - database
+  database:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kanban
+      - MYSQL_USER=kanban
+      - MYSQL_PASSWORD=kanban
+    volumes:
+      - data:/var/lib/mysql
+      - ./data:/docker-entrypoint-initdb.d
+volumes:
+  data:
