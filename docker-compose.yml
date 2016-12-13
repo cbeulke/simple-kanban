@@ -13,6 +13,8 @@ services:
       DB_NAME: kanban
     depends_on:
       - database
+    volumes:
+      - .:/app
   database:
     image: mysql
     environment:
